@@ -1,0 +1,19 @@
+{
+  "name": "@aragonite/vbox-runner",
+  "version": "0.0.0",
+  "description": "Connects to an Aragonite server from inside a VirtualBox environment.",
+  "main": "VBoxRunner.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rweda/aragonite-vbox-runner.git"
+  },
+  "author": "Ryan Leonard (http://ryanleonard.us)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rweda/aragonite-vbox-runner/issues"
+  },
+  "homepage": "https://github.com/rweda/aragonite-vbox-runner#readme"
+}
