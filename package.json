@@ -14,6 +14,10 @@
     "url": "git+https://github.com/rweda/aragonite-vbox-runner.git"
   },
   "author": "Ryan Leonard (http://ryanleonard.us)",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/",
+    "access": "public"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rweda/aragonite-vbox-runner/issues"
