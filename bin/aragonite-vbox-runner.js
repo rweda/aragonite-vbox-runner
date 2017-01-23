@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 
 var Promise = require("bluebird");
@@ -48,7 +49,7 @@ class CLI {
    * @return {Promise} resolves once the configuration has been parsed.
   */
   handleConfig() {
-    fs
+    return fs
       .readFileAsync(this.opts.args[0], "utf8")
       .then(file => {
         this.config = yaml.safeLoad(file);
@@ -83,9 +84,9 @@ class CLI {
   get mac() {
     let network = Promise.promisifyAll(require("network"));
     return network
-      .get_interfaces_list()
+      .get_interfaces_listAsync()
       .then(list => {
-        list.map(i => i.mac_address.replace(/\:/, ""));
+        return list.map(i => i.mac_address.replace(/\:/, ""));
       });
   }
 
@@ -104,9 +105,9 @@ class CLI {
         machine = this.runner.machine;
         conf = this.runner.conf;
       })
-      .then(() => { this.mac; })
-      .then(mac => { this.runner.mac(mac); })
-      .then(() => { Promise.all[machine, conf]); })
+      .then(() => { return this.mac; })
+      .then(mac => { return this.runner.mac(mac); })
+      .then(() => { return Promise.all([machine, conf]); })
       .then((machine, conf) => {
         this.machine = machine;
         this.conf = conf;
