@@ -56,7 +56,7 @@ class CLI {
 
   /**
    * Returns the hostname specified in the config, or looks up the gateway IP.
-   * TODO: Works in Linux, OSX, Windows 10.  Test `network.get_gateway_ip` on Win 7, etc, and parse `ipconfig` if it
+   * @TODO: Works in Linux, OSX, Windows 10.  Test `network.get_gateway_ip` on Win 7, etc, and parse `ipconfig` if it
    *   doesn't work.
    * @return {Promise<string>}
   */
