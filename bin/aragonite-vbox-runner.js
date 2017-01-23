@@ -196,9 +196,10 @@ class CLI {
   /**
    * Cleans up from the run and reports to Aragonite.
    * @return {Promise} resolves once all cleanup is completed, and Aragonite has been informed of completion.
+   * @TODO: add cleanup command section to the configuration.
   */
   finish() {
-    return Promise.resolve();
+    return this.runner.done();
   }
 
 }

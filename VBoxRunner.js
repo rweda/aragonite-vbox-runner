@@ -45,7 +45,16 @@ class VBoxRunner {
    * @return {Promise} resolves when the report has been sent.
   */
   report(report) {
-    this.socket.emit(report);
+    this.socket.emit("report", report);
+    return Promise.resolve();
+  }
+
+  /**
+   * Reports to Aragonite that this machine has finished it's testing.
+   * @return {Promise} resolves when Aragonite has been informed.
+  */
+  done() {
+    this.socket.emit("done");
     return Promise.resolve();
   }
 
