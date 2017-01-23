@@ -116,6 +116,7 @@ class CLI {
   /**
    * Runs required setup before running tests: install packages, clone or unpack project, etc.
    * @return {Promise} resolves once environment is fully setup.
+   * @TODO clone/unpack project
    * @TODO Add a 'setup' section to the YAML script.
   */
   setup() {
