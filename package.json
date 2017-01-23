@@ -1,6 +1,6 @@
 {
   "name": "@aragonite/vbox-runner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Connects to an Aragonite server from inside a VirtualBox environment.",
   "main": "VBoxRunner.js",
   "bin": {
