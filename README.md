@@ -24,6 +24,7 @@ script:
   - echo "Failure 12"
 format: "goodbad"
 goodbad:
+  success: "Passed successfully"
   good: "Success ([0-9]+)"
   bad: "Failure ([0-9]+)"
   duration: "Total ([0-9]+)ms"  

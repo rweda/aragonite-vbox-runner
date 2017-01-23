@@ -150,7 +150,47 @@ class CLI {
    * @return {Promise} resolves once results are reported to Aragonite.
   */
   reportResult() {
-    return Promise.resolve();
+    if(!this.config.format) {
+      return Promise.resolve();
+    }
+    if(!this[this.config.format]) {
+      return Promise.reject(new Error("Report format " + this.config.format + " is not supported."));
+    }
+    return this[this.config.format]()
+      .then(report => {
+        return this.runner.report(report);
+      });
+  }
+
+  /**
+   * Create a report in the "goodbad" format.
+   * @return {Promise<Object>} a goodbad report.
+  */
+  goodbad() {
+    if(!this.config.goodbad) {
+      return Promise.reject(new Error("goodbad report requires a 'goodbad' config section."));
+    }
+    let log = this.log.map(l => l.msg).reduce((l, entry) => "" + l + entry, "");
+    let report = {
+      format: "goodbad"
+    };
+    for(field of ["success", "good"]) {
+      if(!this.config.goodbad[field]) {
+        return Promise.reject(new Error("goodbad configuration needs a '" + field + "' regex."));
+      }
+    }
+    report.success = log.test(new RegExp(this.config.goodbad.success));
+    let good = log.match(new RegExp(this.config.goodbad.good));
+    if(!good || !good[1] || isNaN(parseInt(good[1], 10))) {
+      return Promise.reject(new Error("goodbad 'good' regex failed."));
+    }
+    report.good = parseInt(good[1], 10);
+    for(field of ["bad", "skipped", "duration"]) {
+      if(!this.config.goodbad[field]) { continue; }
+      let val = log.match(new RegExp(this.config.goodbad[field]));
+      if(val && val[1] && !isNaN(parseInt(val[1], 10))) { report[field] = parseInt(val[1], 10); }
+    }
+    return Promise.resolve(report);
   }
 
   /**

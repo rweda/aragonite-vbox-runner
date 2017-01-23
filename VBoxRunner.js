@@ -40,6 +40,16 @@ class VBoxRunner {
   }
 
   /**
+   * Returns the run results to the Aragonite server.
+   * @param {Report} report the run results
+   * @return {Promise} resolves when the report has been sent.
+  */
+  report(report) {
+    this.socket.emit(report);
+    return Promise.resolve();
+  }
+
+  /**
    * Disconnect from the Socket.
   */
   disconnect() {
