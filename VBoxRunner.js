@@ -2,6 +2,12 @@
 
 var eventToPromise = require("event-to-promise");
 
+/**
+ * Connects to an Aragonite server (running aragonite-vbox) from inside a spawned VirtualBox machine.
+ *
+ * @prop {Promise<Object>} machine Resolves to the machine info sent by Aragonite.
+ * @prop {Promise<Object>} conf    Resolves to the run info sent by Aragonite.
+*/
 class VBoxRunner {
 
   /**
@@ -12,6 +18,8 @@ class VBoxRunner {
   */
   connect(host, port) {
     this.socket = require("socket.io-client")("http://"+host+":"+port);
+    this.machine = eventToPromise(this.socket, "machine");
+    this.conf = eventToPromise(this.socket, "conf");
     return eventToPromise(this.socket, "connect");
   }
 

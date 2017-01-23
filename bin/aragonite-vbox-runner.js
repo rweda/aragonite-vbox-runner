@@ -93,19 +93,29 @@ class CLI {
    * @return {Promise} resolves once connection has been established, and basic information has been received.
   */
   connect() {
+    let machine = null;
+    let conf = null;
     return  Promise
       .all([this.host, this.port])
       .then((host, port) => {
         this.runner = new VBoxRunner();
         this.runner.connect(host, port);
+        machine = this.runner.machine;
+        conf = this.runner.conf;
       })
       .then(() => { this.mac; })
-      .then(mac => { this.runner.mac(mac); });
+      .then(mac => { this.runner.mac(mac); })
+      .then(() => { Promise.all[machine, conf]); })
+      .then((machine, conf) => {
+        this.machine = machine;
+        this.conf = conf;
+      });
   }
 
   /**
    * Runs required setup before running tests: install packages, clone or unpack project, etc.
    * @return {Promise} resolves once environment is fully setup.
+   * @TODO Add a 'setup' section to the YAML script.
   */
   setup() {
     return Promise.resolve();
