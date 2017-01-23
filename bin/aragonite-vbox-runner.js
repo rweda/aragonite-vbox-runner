@@ -6,6 +6,7 @@ var VBoxRunner = require("../VBoxRunner");
 var yaml = require("js-yaml");
 var fs = Promise.promisifyAll(require("fs"));
 var customError = require("custom-error");
+var execAsync = require("child-process-promise").exec;
 
 let errors = {
 }
@@ -126,7 +127,22 @@ class CLI {
    * @return {Promise} resolves once the script has finished.
   */
   runScript() {
-    return Promise.resolve();
+    let task = Promise.resolve();
+    this.log = [];
+    if(!this.config.script) {
+      this.config.script = [];
+    }
+    for(const cmd of this.config.script) {
+      task = task.then(() => {
+        let child = execAsync(cmd);
+        child.childProcess.stdout.on("data", (msg) => { this.log.push({ type: "stdout", msg: msg }); });
+        child.childProcess.stderr.on("data", (msg) => { this.log.push({ type: "stderr", msg: msg }); });
+      });
+      if(this.config.ignore_errors) {
+        task = task.catch(err => { return true; });
+      }
+    }
+    return task;
   }
 
   /**

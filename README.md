@@ -18,11 +18,15 @@ run in a YAML file, similar to the files used by [GitLab CI][] and [Travis CI][]
 port: 5720
 repo: git
 cwd: "~/my-project"
+ignore_failure: true
 script:
   - echo "Success 55"
   - echo "Failure 12"
-success_regex: "Success ([0-9]+)"
-failure_regex: "Failure ([0-9]+)"
+format: "goodbad"
+goodbad:
+  good: "Success ([0-9]+)"
+  bad: "Failure ([0-9]+)"
+  duration: "Total ([0-9]+)ms"  
 ```
 
 #### Connection
@@ -53,8 +57,11 @@ any script failures will abort the entire environment, and report an error to Ar
 
 #### Success/Failure parsing
 
-By default, the runner will report a success and failure count.  `success_regex` and `failure_regex` can provide simple
-regex's that will be run on the entire script output, and matches will be reported to Aragonite.
+Aragonite supports multiple formats of reports, to support different types of applications.
+
+Specify the report format with `format`, e.g. `"goodbad"`.
+
+Report formats might define additional options, such as regular expressions to parse log outputs.
 
 ### 2. Installation
 

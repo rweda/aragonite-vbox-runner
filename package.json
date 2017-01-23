@@ -21,6 +21,7 @@
   "homepage": "https://github.com/rweda/aragonite-vbox-runner#readme",
   "dependencies": {
     "bluebird": "^3.4.7",
+    "child-process-promise": "^2.2.0",
     "commander": "^2.9.0",
     "custom-error": "^0.2.1",
     "event-to-promise": "^0.7.0",
